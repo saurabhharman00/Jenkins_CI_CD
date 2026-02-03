@@ -21,5 +21,16 @@ pipeline {
                 echo 'Deployment also done'
             }
         }
+        stage("docker push" ){
+            steps{
+                echo "Running in $WORKSPACE"
+                script {
+                    docker.withRegistry('', 'dockerhub') {
+                        def image = docker.build('saurabhpaul84/jenkins-pipeline: Jenkins-CI_CD-Feb-2023')
+                        image.push()
+                    }
+                }
+            }
+        }
     }
 }
